@@ -1,109 +1,121 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title> lumbricus terrestris project HU</title>
+    <meta charset="utf-8">
+    <meta content="Jim Robinson" name="author">
+    <link href=img/favicon.ico rel="shortcut icon">
+    <title>Interact</title>
+
+
 </head>
 
 <body>
 
-<h3> Lumbricus Terrestris. Worked out chromosome 1 </h3>
-<p> Track1 :junctions </p>
-<p> Track2: rna-seq transcripts </p> 
-<p> Track3: protocol1 (rna pipeline) </p>
-<p> Track4: prtocol2 (protein pipeline) </p>
 
-<div id="igvDiv"></div>
+
+<div id="igvDiv" style="padding-top: 20px;padding-bottom: 20px; height: auto"></div>
+
+
+
+<div id="igvDiv2" style="padding-top: 20px;padding-bottom: 20px; height: auto"></div>
 
 <script type="module">
 
-    import igv from "./dist/igv.esm.js"
+    import igv from "https://genome321.s3.amazonaws.com/igv.esm.min.js"
 
-
-     // create custom format
-	 
-	 
-    const dragenrohbedFormatFields = ['chr', 'start', 'end', 'score', 'hom', 'het']
-    igv.registerFileFormats("dragenrohbed", dragenrohbedFormatFields)
-
-    const annFields = ['chr','source', 'feature', 'start', 'end', 'score', 'strand','hom', 'id']
-    igv.registerFileFormats("annot", annFields)
-    
-
-    const ann2Fields = ['chr','source', 'feature', 'start', 'end', 'score', 'strand']
-    igv.registerFileFormats("annot2", ann2Fields)
-	
-	const jFields = ['chr',  'start', 'end', 'feature', 'score', 'strand']
-    igv.registerFileFormats("j", jFields)
+    // BEDPE examples
+    const options =
+        {
+            reference: {
+                "id": "wcLumTerr1.1",
+                "name": "Lumbricus_terrestris",
+                "fastaURL": "https://genome321.s3.amazonaws.com/Lumbricus_terrestris-GCA_949752735.1-softmasked.fa",
+                "indexURL": "https://genome321.s3.amazonaws.com/Lumbricus_terrestris-GCA_949752735.1-softmasked.fa.fai",
+                "cytobandURL": "https://genome321.s3.amazonaws.com/cytoBand_lumterr.txt"
+            },
+			
+            locus: "chr1:63,712,533-64,693,448",
+			
+            tracks: [
+			
+			    {
+				name: 'rna-seq',
+				url: 'https://genome321.s3.amazonaws.com/transcripts.OX457036.1.gtf',
+					//color: '#03A9F4',
+				color:'navy',
+				type: 'annotation',
+				format: 'gff3'
+                },
+ 				{
+				   
+                    url: "https://genome321.s3.amazonaws.com/helixer-chr1.gff3",
+                    type: "annotation",
+                    format: "gff3",                 
+                    name:"gff3 annotation",
+                    color: "#A9A9A9"
+					
+				}
  
 
-  
-   const config = {
-        reference: "mm10",
-        locus: "chr1:229,907-347,044",
-        tracks: [
+            ]
+        }
 
-			{
-				url: './junctions7.bed', 
-				type: 'junction',
-				name: 'Junctions',
-				format: 'bed',
-				displayMode: 'COLLAPSED',
-				minUniquelyMappedReads: 1,
-				minTotalReads: 1,
-				maxFractionMultiMappedReads: 1,
-				minSplicedAlignmentOverhang: 0
-			},			
-		
-			
-            {
-                name: 'rna-seq',
-                url: './transcripts.gff',
-                color: '#03A9F4',
-                type: 'annotation',
-                format: 'gff3'
-            },
-			
-            {
-                name: 'protocol1',
-                url: './protocol1.gff',            
-                format: 'gff3',
-				colorBy: "biotype",
-				colorTable: {
-				"antisense": "blueviolet",
-				"protein_coding": "blue",
-				"processed_transcript": "purple",
-				"processed_pseudogene": "#7fff00",
-				 "*": "DimGray",
-				 "unprocessed_pseudogene": "#d2691e"
-				 }
-            },
+    igv.createBrowser(document.getElementById("igvDiv"), options)
 
+    // UCSC interact format examples
+    const options2 =
+        {
+            
+			reference:{
 			
-            {
-                name: "Protocol2",
-                format: "gff3",
-                displayMode: "expanded",
-                height: 300,
-                url: './protocol2.gff',                
-                visibilityWindow: 1000000,
-                colorBy: "biotype",
-                // Uncomment to explicitly set a colorTable
-                colorTable: {
-                "antisense": "blueviolet",
-                "protein_coding": "blue",
-                "retained_intron": "rgb(0, 150, 150)",
-                "processed_transcript": "purple",
-                "processed_pseudogene": "#7fff00",
-                "unprocessed_pseudogene": "#d2691e",
-                "*": "black"
-                }
-            },
+				"id": "LumRube",
+				"name": "Lumbricus_rubellus",
+				"fastaURL": "https://genome321.s3.amazonaws.com/Lumbricus_rubellus-GCA_945859605.1-softmasked.fa",
+				"indexURL": "https://genome321.s3.amazonaws.com/Lumbricus_rubellus-GCA_945859605.1-softmasked.fa.fai",
+				"cytobandURL": "https://genome321.s3.amazonaws.com/cytoBand_lumrube.txt"
+				
+				
 			
-        ]
-    }
+			},
+			
+            locus: "chr1:63,712,533-64,693,448",
+            tracks: [
+                {
+                    url: "https://genome321.s3.amazonaws.com/transcripts_chr1-OX243811.1.gff",
+                    name: "rna-seq",
+					color:'navy',
+					type: 'annotation',
+					format: 'gff3'
 
-    const browser = await igv.createBrowser(document.getElementById("igvDiv"), config)
+                },
+                {
+				   
+                    url: "https://genome321.s3.amazonaws.com/lumrube.chr1.gff3",
+                    type: "annotation",
+                    format: "gff3",                 
+                    name:"augustus",
+                    color: "gray"
+					
+				},
+				
+				{
+				   
+                    url: "https://genome321.s3.amazonaws.com/helixer-chr1.gff3",
+                    type: "annotation",
+                    format: "gff3",                 
+                    name:"helixer",
+                    color: "#A9A9A9"
+					
+				},
+
+            ]
+        }
+
+    igv.createBrowser(document.getElementById("igvDiv2"), options2)
+
 
 </script>
 
 </body>
+
 </html>
