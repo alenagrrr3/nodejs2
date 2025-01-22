@@ -4,57 +4,58 @@
     <meta charset="utf-8">
     <meta content="Jim Robinson" name="author">
     <link href=img/favicon.ico rel="shortcut icon">
-    <title>Interact</title>
+    <title>positive control  </title>
 
 
 </head>
 
 <body>
 
+<h3> Augustus gff positive control : C Elegans  </h3>
+
+
+
 
 <div id="igvDiv" style="padding-top: 20px;padding-bottom: 20px; height: auto"></div>
 
-<h2></h2>
-
-<div id="igvDiv2" style="padding-top: 20px;padding-bottom: 20px; height: auto">
-
-<h4>Embeddable genomic visualization component based on the Integrative Genomics Viewer </h4>
-
-<p>Track1 : rna-seq (transcripts&exons)</p>
-
-<p>Track2 : junctions</p>
-
-<p>Track3 : protocol1 Augustus</p>
-
-<p>Track4 : protocol2 Augustus</p>
-
-<p>Track5 : protein Hints</p>
-
-<p> To find the coordinates, type the genome coordinates into the search box </p>
-<p>Zoom in to view the nucleotide sequence clearly. </p>
 
 
-</div>
-
-
-
+<div id="igvDiv2" style="padding-top: 20px;padding-bottom: 20px; height: auto"></div>
 
 <script type="module">
-
-
-// https://genome321.s3.amazonaws.com/protocol1OX457036.gff
-// https://genome321.s3.amazonaws.com/protocol2OX457036.gff
-// https://genome321.s3.amazonaws.com/hintshOX457036.gtf
-// https://genome321.s3.amazonaws.com/transcriptsOX457036.gtf
-
-//https://genome321.s3.amazonaws.com/junctions.bed
-//https://genome321.s3.amazonaws.com/transcripts.gff3
-
 
     import igv from "https://genome321.s3.amazonaws.com/igv.esm.min.js"
 
     // BEDPE examples
     const options =
+        {
+   			
+			locus: "chrI:56,366-672,302",
+            genome: "ce11",           
+			
+            tracks: [
+			
+
+ 				{
+				   
+                    url: "/celegans.ch1.gff3",
+                    type: "annotation",
+                    format: "gff3",                 
+                    name:"Augustus",
+                    color: "#A9A9A9"
+					
+				},
+				
+				
+
+
+            ]
+        }
+
+    igv.createBrowser(document.getElementById("igvDiv"), options)
+
+    // UCSC interact format examples
+    const options2 =
         {
             reference: {
                 "id": "wclumterr",
@@ -140,12 +141,13 @@
 
             ]
         }
-
-    igv.createBrowser(document.getElementById("igvDiv"), options)
-
+    igv.createBrowser(document.getElementById("igvDiv2"), options2)
 
 
 </script>
+
+
+
 
 </body>
 
